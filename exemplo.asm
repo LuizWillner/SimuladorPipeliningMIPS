@@ -1,2 +1,2 @@
-ADDI $S0, $ZERO,
+ADDI $S0, $ZERO, 10
 ADD $V0, $ZERO, $AT
