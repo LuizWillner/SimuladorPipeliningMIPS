@@ -57,11 +57,11 @@ arq_instset = open('ArquivosDasInstrucoes/instruction_set.txt', 'r')
 # Além disso, gerar também dicionário que associa todas as flags do código com suas respectivas posições no arquivo
 instruction_fields = ler_instruction_fields(arq_assembly)
 
-# Lista em memória que representa o banco de registradores
-banco_regs = []
+# Dicionário que representa o banco de registradores
+banco_regs = dict({})
 for i in range(32):  # 32 é a quantidade de registradores do processador
     reg = ler_registrador(arq_regset)
-    banco_regs.append(reg)
+    banco_regs[reg.nome] = reg
 
 # Lista que representa a memória de dados
 memoria_dados = [0] * 1000
