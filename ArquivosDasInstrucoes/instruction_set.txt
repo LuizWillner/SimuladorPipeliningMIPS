@@ -1,0 +1,70 @@
+Instrucao ADD
+Opcode: 0
+Tipo: R
+Funct: 32
+
+Instrucao ADDI
+Opcode: 8
+Tipo: I
+Funct: None
+
+Instrucao AND
+Opcode: 0
+Tipo: R
+Funct: 36
+
+Instrucao BEQ
+Opcode: 4
+Tipo: I
+Funct: None
+
+Instrucao BNE
+Opcode: 5
+Tipo: I
+Funct: None
+
+Instrucao J
+Opcode: 2
+Tipo: J
+Funct: None
+
+Instrucao JAL
+Opcode: 3
+Tipo: J
+Funct: None
+
+Instrucao JR
+Opcode: 0
+Tipo: R
+Funct: 8
+
+Instrucao LW
+Opcode: 35
+Tipo: I
+Funct: None
+
+Instrucao OR
+Opcode: 0
+Tipo: R
+Funct: 37
+
+Instrucao SLL
+Opcode: 0
+Tipo: R
+Funct: 0
+
+Instrucao SRL
+Opcode: 0
+Tipo: R
+Funct: 2
+
+Instrucao SW
+Opcode: 43
+Tipo: I
+Funct: None
+
+Instrucao SUB
+Opcode: 0
+Tipo: R
+Funct: 34
+
