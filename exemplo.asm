@@ -1,1 +1,2 @@
+ADDI $S0, $ZERO,
 ADD $V0, $ZERO, $AT
