@@ -126,7 +126,48 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
         print(f'Atualmente no estágio 3: {pipelining[3]}')
 
         print('\n####### PIPELINING #######')
-        print(pipelining)
+        for p in pipelining:
+            print(p)
+        print('##########################\n')
+
+        ciclo += 1
+
+    # Após colocar todas as instruções do script em fila, terminar de executar o pipelining até ele ficar vazio
+    while pipelining != [None, None, None, None, None]:
+
+        print(f'\n================================= CICLO {ciclo} =================================\n')
+        #  Pipelining ESTÁGIO 0 - IF: Como o script já foi percorrido por inteiro, ir adicionando None aos poucos para
+        # encerrar pipelining
+        pipelining.insert(0, None)
+        pipelining.pop()
+        print(f'Atualmente no estágio 0: {pipelining[0]}')
+
+        # Pipelining ESTÁGIO 4 - WB: Escreve o resultado da operação do estágio 4 (se houver) no banco de registradores
+        # O estágio 4 (de ecrita) ocorre antes do estágio 1 (de leitura).
+        if pipelining[4]:
+            pass
+        print(f'Atualmente no estágio 4: {pipelining[4]}')
+
+        # Pipelining ESTÁGIO 1 - ID: Decodificar (se houver) a instrução que está no estágio 1 do pipe, fazendo
+        # a leitura dos registradores.
+        # Instruções J, JR, JAL, BEQ e BNE fazem o desvio no estágio 1 (ID).
+        if pipelining[1]:
+            pipelining[1] = pipe1_decodificar_instrucao(pipelining[1], conj_de_instrucoes, banco_regs)
+        print(f'Atualmente no estágio 1: {pipelining[1]}')
+
+        # Pipelining ESTÁGIO 2 - EX: Calcula o endereço ou executa a operação expressa pela instrução que está na etapa 2 (se houver)
+        if pipelining[2]:
+            pass
+        print(f'Atualmente no estágio 2: {pipelining[2]}')
+
+        # Pipelining ESTÁGIO 3 - MEM: Acessa a memória de dados da forma que a instrução do estágio 3 pedir
+        if pipelining[3]:
+            pass
+        print(f'Atualmente no estágio 3: {pipelining[3]}')
+
+        print('\n####### PIPELINING #######')
+        for p in pipelining:
+            print(p)
         print('##########################\n')
 
         ciclo += 1
