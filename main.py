@@ -26,6 +26,7 @@ def gerar_lista_instruction_fields(command_line):
 def ler_instruction_fields(arq_assembly):
     linha = arq_assembly.readline()
     instruction_fields = []
+    num_linha = 1
 
     while linha:
         linha_lista = gerar_lista_instruction_fields(linha)
@@ -36,10 +37,12 @@ def ler_instruction_fields(arq_assembly):
             if ':' in linha_lista[0]:  # se tiver ':', é uma flag, então...
                 # Adicionar flag no dicionario de flags junto com sua posição no arquivo
                 flag_nome = linha_lista[0].replace(':', '')
-                flag_pos = arq_assembly.tell()
+                # flag_pos = arq_assembly.tell()
+                flag_pos = num_linha
                 flags_no_arq[flag_nome] = flag_pos
 
         linha = arq_assembly.readline()  # passar pra próxima linha
+        num_linha += 1
 
     return instruction_fields
 

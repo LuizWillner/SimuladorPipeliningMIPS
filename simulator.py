@@ -6,7 +6,7 @@
 
 def processar_instrucao_R(linha_de_instrucao, banco_regs):
 
-    if linha_de_instrucao[0] == 'ADD':
+    if linha_de_instrucao[0] == 'ADD' or linha_de_instrucao[0] == 'AND' or linha_de_instrucao[0] == 'OR' or linha_de_instrucao[0] == 'SUB':
         nome_rd = linha_de_instrucao[1].lower()
         rd = banco_regs[nome_rd]
         # rd.print_register()
@@ -21,10 +21,26 @@ def processar_instrucao_R(linha_de_instrucao, banco_regs):
 
         return [rd, rs, rt]
 
-    # TODO: Completar processamento com as outras instruções do tipo R
+    elif linha_de_instrucao[0] == 'SLL' or linha_de_instrucao[0] == 'SRL':
+        nome_rd = linha_de_instrucao[1].lower()
+        rd = banco_regs[nome_rd]
+
+        nome_rs = linha_de_instrucao[2].lower()
+        rs = banco_regs[nome_rs]
+
+        shamt = linha_de_instrucao[3]
+        shamt = int(shamt)
+
+        return [rd, rs, shamt]
+
+    elif linha_de_instrucao[0] == 'JR':
+        nome_rs = linha_de_instrucao[1].lower()
+        rs = banco_regs[nome_rs]
+
+        return [rs]
 
 
-def processar_instrucao_I(linha_de_instrucao, banco_regs):
+def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq):
 
     if linha_de_instrucao[0] == 'ADDI':
         nome_rt = linha_de_instrucao[1].lower()
@@ -38,16 +54,41 @@ def processar_instrucao_I(linha_de_instrucao, banco_regs):
 
         return [rt, rs, imediato]
 
-    # TODO: Completar processamento com as outras instruções do tipo I
+    elif linha_de_instrucao[0] == 'LW' or linha_de_instrucao[0] == 'SW':
+        nome_rt = linha_de_instrucao[1].lower()
+        rt = banco_regs[nome_rt]
+
+        nome_rs = linha_de_instrucao[3].lower()
+        rs = banco_regs[nome_rs]
+
+        imediato = linha_de_instrucao[2]
+        imediato = int(imediato)
+
+        return [rt, rs, imediato]
+
+    elif linha_de_instrucao[0] == 'BEQ' or linha_de_instrucao[0] == 'BNE':
+        nome_rs = linha_de_instrucao[1].lower()
+        rs = banco_regs[nome_rs]
+
+        nome_rt = linha_de_instrucao[1].lower()
+        rt = banco_regs[nome_rt]
+
+        label = linha_de_instrucao[3]
+        label_linha = flags_no_arq[label]
+
+        return [rs, rt, label_linha]
 
 
-def processar_instrucao_J():
-    # TODO: Executar instrução do tipo J
-    return
+def processar_instrucao_J(linha_de_instrucao, flags_no_arq):
+
+    if linha_de_instrucao[0] == 'J' or linha_de_instrucao[0] == 'JAL':
+        label = linha_de_instrucao[1]
+        label_linha = flags_no_arq[label]
+
+        return [label_linha]
 
 
-def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_regs):
-    linha_de_instrucao_processada = []
+def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_regs, flags_no_arq):
 
     nome_instrucao = linha_de_instrucao[0]
     instrucao = conj_de_instrucoes[nome_instrucao]
@@ -58,11 +99,12 @@ def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_re
         linha_de_instrucao_processada.insert(0, instrucao)
 
     elif instrucao.tipo == 'I':
-        linha_de_instrucao_processada = processar_instrucao_I(linha_de_instrucao, banco_regs)
+        linha_de_instrucao_processada = processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq)
         linha_de_instrucao_processada.insert(0, instrucao)
 
     else:  # instrucao.tipo == 'J'
-        pass
+        linha_de_instrucao_processada = processar_instrucao_J(linha_de_instrucao, flags_no_arq)
+        # linha_de_instrucao_processada.insert(0, instrucao)
 
     return linha_de_instrucao_processada
 
@@ -71,7 +113,7 @@ def pipe2_executar_instrucao():
     return
 
 
-def avancar_pipelining(fila_pipeline, linha_de_instrucao_para_inserir, conj_de_instrucoes, banco_regs, ciclo_atual):
+def avancar_pipelining(fila_pipeline, linha_de_instrucao_para_inserir, conj_de_instrucoes, banco_regs, ciclo_atual, flags_no_arq):
     print(f'\n================================= CICLO {ciclo_atual} =================================\n')
     #  Pipelining ESTÁGIO 0 - IF: "Buscar" próxima instrução na fila de pipeline e adicionar no início da fila;
     fila_pipeline.insert(0, linha_de_instrucao_para_inserir)
@@ -88,7 +130,7 @@ def avancar_pipelining(fila_pipeline, linha_de_instrucao_para_inserir, conj_de_i
     # a leitura dos registradores.
     # Instruções J, JR, JAL, BEQ e BNE fazem o desvio no estágio 1 (ID).
     if fila_pipeline[1]:
-        fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs)
+        fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs, flags_no_arq)
     print(f'Atualmente no estágio 1: {fila_pipeline[1]}')
 
     # Pipelining ESTÁGIO 2 - EX: Calcula o endereço ou executa a operação expressa pela instrução que está na etapa 2 (se houver)
@@ -140,7 +182,8 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
                                    linha_de_instrucao_para_inserir=linha[i:],
                                    conj_de_instrucoes=conj_de_instrucoes,
                                    banco_regs=banco_regs,
-                                   ciclo_atual=ciclo)
+                                   ciclo_atual=ciclo,
+                                   flags_no_arq=flags_no_arq)
 
     # Após colocar todas as instruções do script em fila, terminar de executar o pipeline até ele ficar vazio
     while pipeline != [None, None, None, None, None]:
@@ -148,6 +191,7 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
                                    linha_de_instrucao_para_inserir=None,
                                    conj_de_instrucoes=conj_de_instrucoes,
                                    banco_regs=banco_regs,
-                                   ciclo_atual=ciclo)
+                                   ciclo_atual=ciclo,
+                                   flags_no_arq=flags_no_arq)
 
     return
