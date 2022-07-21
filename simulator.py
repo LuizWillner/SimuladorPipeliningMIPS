@@ -82,6 +82,8 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
                                        memoria_dados=memoria_dados,
                                        flags_no_arq=flags_no_arq,
                                        resultado=resultado)
+        memoria_dados.print_memory()
+        print()
         ciclo += 1
 
     # Após colocar todas as instruções do script em fila, terminar de executar o pipeline até ele ficar vazio
@@ -94,6 +96,8 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
                                        memoria_dados=memoria_dados,
                                        flags_no_arq=flags_no_arq,
                                        resultado=resultado)
+        memoria_dados.print_memory()
+        print()
         ciclo += 1
 
     for nome_reg in banco_regs:

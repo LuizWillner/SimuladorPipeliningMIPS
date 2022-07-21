@@ -8,8 +8,10 @@ class Memory:
         print('############# MEMÓRIA #############')
         for key in self.filled_values:
             print(f'Memoria[{key}] = {self.filled_values[key]}')
+        print('###################################')
 
     def print_all_memory(self):
         print('######### MEMÓRIA COMPLETA #########')
         for i in range(self.lenght):
             print(f'Memoria[{i}] = {self.values[i]}')
+        print('###################################')

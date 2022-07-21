@@ -1,5 +1,2 @@
-SW $T0, 750($T9)
-ADD $V0, $ZERO, $AT
-ADDI $T8,$S6,-32768
-SUB $A1,$V1,$A0
-LW $S0,750($T9)
+and $v0, $at, $t0
+or $v1, $at, $t0
