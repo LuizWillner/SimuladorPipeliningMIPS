@@ -68,7 +68,7 @@ Valor armazenado: 0
 
 Registrador 17
 Nome: $s1
-Valor armazenado: 0
+Valor armazenado: 1
 
 Registrador 18
 Nome: $s2

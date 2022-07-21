@@ -1,5 +1,3 @@
-sll $t2, $t0, 2
-srl $t3, $t0, 2
-nop
-nop
-add $t4, $t0, $t1
+add $v0, $at, $a0
+addi $t2, $t0, 6
+add $s2, $s1, $s0

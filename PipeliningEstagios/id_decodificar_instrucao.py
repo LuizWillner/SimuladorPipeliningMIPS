@@ -8,11 +8,11 @@ def processar_instrucao_R(linha_de_instrucao, banco_regs):
         # rd.print_register()
 
         nome_rs = linha_de_instrucao[2].lower()
-        rs = banco_regs[nome_rs]
+        rs = banco_regs[nome_rs].valor
         # rs.print_register()
 
         nome_rt = linha_de_instrucao[3].lower()
-        rt = banco_regs[nome_rt]
+        rt = banco_regs[nome_rt].valor
         # rt.print_register()
 
         return [rd, rs, rt]
@@ -22,7 +22,7 @@ def processar_instrucao_R(linha_de_instrucao, banco_regs):
         rd = banco_regs[nome_rd]
 
         nome_rs = linha_de_instrucao[2].lower()
-        rs = banco_regs[nome_rs]
+        rs = banco_regs[nome_rs].valor
 
         shamt = linha_de_instrucao[3]
         shamt = int(shamt)
@@ -30,6 +30,7 @@ def processar_instrucao_R(linha_de_instrucao, banco_regs):
         return [rd, rs, shamt]
 
     elif linha_de_instrucao[0] == 'JR':
+        # TODO: Verificar se tá certo
         nome_rs = linha_de_instrucao[1].lower()
         rs = banco_regs[nome_rs]
 
@@ -43,19 +44,31 @@ def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq):
         rt = banco_regs[nome_rt]
 
         nome_rs = linha_de_instrucao[2].lower()
-        rs = banco_regs[nome_rs]
+        rs = banco_regs[nome_rs].valor
 
         imediato = linha_de_instrucao[3].lower()
         imediato = int(imediato)
 
         return [rt, rs, imediato]
 
-    elif linha_de_instrucao[0] == 'LW' or linha_de_instrucao[0] == 'SW':
+    elif linha_de_instrucao[0] == 'LW':
         nome_rt = linha_de_instrucao[1].lower()
         rt = banco_regs[nome_rt]
 
         nome_rs = linha_de_instrucao[3].lower()
-        rs = banco_regs[nome_rs]
+        rs = banco_regs[nome_rs].valor
+
+        imediato = linha_de_instrucao[2]
+        imediato = int(imediato)
+
+        return [rt, rs, imediato]
+
+    elif linha_de_instrucao[0] == 'SW':
+        nome_rt = linha_de_instrucao[1].lower()
+        rt = banco_regs[nome_rt].valor
+
+        nome_rs = linha_de_instrucao[3].lower()
+        rs = banco_regs[nome_rs].valor
 
         imediato = linha_de_instrucao[2]
         imediato = int(imediato)
@@ -63,6 +76,7 @@ def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq):
         return [rt, rs, imediato]
 
     elif linha_de_instrucao[0] == 'BEQ' or linha_de_instrucao[0] == 'BNE':
+        # TODO: Verificar se tá certo
         nome_rs = linha_de_instrucao[1].lower()
         rs = banco_regs[nome_rs]
 
@@ -76,7 +90,7 @@ def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq):
 
 
 def processar_instrucao_J(linha_de_instrucao, flags_no_arq):
-
+    # TODO: Verificar se tá certo
     if linha_de_instrucao[0] == 'J' or linha_de_instrucao[0] == 'JAL':
         label = linha_de_instrucao[1]
         label_linha = flags_no_arq[label]
