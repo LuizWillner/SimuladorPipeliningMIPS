@@ -10,8 +10,12 @@ def pipe4_salvar_no_reg(linha_de_instrucao_processada, banco_regs):
         rd = linha_de_instrucao_processada[1]
         rd.valor = linha_de_instrucao_processada[-1]  # Última posição do vetor é o resultado da operação
 
+    elif instrucao.noe == 'SLL' or instrucao.nome == 'SLL':
+        rd = linha_de_instrucao_processada[1]
+        rd.valor = linha_de_instrucao_processada[-1]  # Última posição do vetor é o resultado da operação
+
     elif instrucao.nome == 'LW':
         rt = linha_de_instrucao_processada[1]
-        rt.valor = linha_de_instrucao_processada[-1]
+        rt.valor = linha_de_instrucao_processada[-1]  # Última posição do vetor é o resultado da operação
 
     return

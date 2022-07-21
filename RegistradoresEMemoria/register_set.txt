@@ -36,7 +36,7 @@ Valor armazenado: 14
 
 Registrador 9
 Nome: $t1
-Valor armazenado: 0
+Valor armazenado: 2
 
 Registrador 10
 Nome: $t2

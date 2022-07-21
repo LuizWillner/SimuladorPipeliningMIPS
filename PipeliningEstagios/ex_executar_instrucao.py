@@ -20,6 +20,18 @@ def executar_instrucao_R(linha_de_instrucao_processada, banco_regs):
         res = rs.valor | rt.valor  # operador | é bit-wise OR
         return res
 
+    elif instrucao.nome == 'SLL':
+        rs = linha_de_instrucao_processada[2]
+        shamt = linha_de_instrucao_processada[3]
+        res = rs.valor << shamt
+        return res
+
+    elif instrucao.nome == 'SRL':
+        rs = linha_de_instrucao_processada[2]
+        shamt = linha_de_instrucao_processada[3]
+        res = rs.valor >> shamt
+        return res
+
     elif instrucao.nome == 'SUB':
         rs = linha_de_instrucao_processada[2]
         rt = linha_de_instrucao_processada[3]
