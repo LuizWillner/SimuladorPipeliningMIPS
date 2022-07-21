@@ -110,8 +110,7 @@ def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual
             return [rt, rs, pc_atual]
 
 
-def processar_instrucao_J(linha_de_instrucao, flags_no_arq):
-    # TODO: Verificar se tá certo
+def processar_instrucao_J(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual):
     if linha_de_instrucao[0] == 'J':
         label = linha_de_instrucao[1]
         label_linha = flags_no_arq[label] - 1
@@ -119,8 +118,10 @@ def processar_instrucao_J(linha_de_instrucao, flags_no_arq):
         return [label_linha]
 
     elif linha_de_instrucao[0] == 'JAL':
-        # TODO: implementar JAL
-        pass
+        label = linha_de_instrucao[1]
+        label_linha = flags_no_arq[label] - 1
+        ra = banco_regs['$ra']
+        return [ra, pc_atual, label_linha]
 
     elif linha_de_instrucao[0] == 'JR':
         # TODO: implementar JR
@@ -142,7 +143,7 @@ def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_re
         linha_de_instrucao_processada.insert(0, instrucao)
 
     else:  # instrucao.tipo == 'J'
-        linha_de_instrucao_processada = processar_instrucao_J(linha_de_instrucao, flags_no_arq)
+        linha_de_instrucao_processada = processar_instrucao_J(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual)
         linha_de_instrucao_processada.insert(0, instrucao)
 
     return linha_de_instrucao_processada

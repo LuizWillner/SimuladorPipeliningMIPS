@@ -55,14 +55,12 @@ def pipe2_executar_instrucao(linha_de_instrucao_processada, banco_regs, flags_no
     if instrucao.tipo == 'R':
         res = executar_instrucao_R(linha_de_instrucao_processada, banco_regs)
         linha_de_instrucao_processada.append(res)
-        return linha_de_instrucao_processada
 
     elif instrucao.tipo == 'I':
         res = executar_instrucao_I(linha_de_instrucao_processada, banco_regs)
         linha_de_instrucao_processada.append(res)
-        return linha_de_instrucao_processada
 
     else:  # instrucao.tipo == 'J'
         pass
 
-    return
+    return linha_de_instrucao_processada

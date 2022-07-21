@@ -18,4 +18,8 @@ def pipe4_salvar_no_reg(linha_de_instrucao_processada, banco_regs):
         rt = linha_de_instrucao_processada[1]
         rt.valor = linha_de_instrucao_processada[-1]  # Última posição do vetor é o resultado da operação
 
+    elif instrucao.nome == 'JAL':
+        ra = linha_de_instrucao_processada[1]
+        ra.valor = linha_de_instrucao_processada[-2]
+
     return
