@@ -30,7 +30,6 @@ def processar_instrucao_R(linha_de_instrucao, banco_regs):
         return [rd, rs, shamt]
 
     elif linha_de_instrucao[0] == 'JR':
-        # TODO: Verificar se tá certo
         nome_rs = linha_de_instrucao[1].lower()
         rs = banco_regs[nome_rs]
 
@@ -124,10 +123,6 @@ def processar_instrucao_J(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual
         label_linha = flags_no_arq[label] - 1
         ra = banco_regs['$ra']
         return [ra, pc_atual, label_linha]
-
-    elif linha_de_instrucao[0] == 'JR':
-        # TODO: implementar JR
-        pass
 
 
 def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_regs, flags_no_arq, pc_atual):

@@ -20,6 +20,6 @@ def pipe4_salvar_no_reg(linha_de_instrucao_processada, banco_regs):
 
     elif instrucao.nome == 'JAL':
         ra = linha_de_instrucao_processada[1]
-        ra.valor = linha_de_instrucao_processada[-2]
+        ra.valor = linha_de_instrucao_processada[-2] + 1  # salva endereço da próxima instrução no reg $ra
 
     return

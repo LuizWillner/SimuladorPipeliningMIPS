@@ -28,10 +28,10 @@ def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir,
     # Instruções J, JR, JAL, BEQ e BNE fazem o desvio nesse estágio (ID).
     if fila_pipeline[1]:
         fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs, flags_no_arq, pc_atual)
-        if fila_pipeline[1][0].nome == 'BEQ' or fila_pipeline[1][0].nome == 'BNE' or fila_pipeline[1][0].nome == 'J' \
-                or fila_pipeline[1][0].nome == 'JAL' or fila_pipeline[1][0].nome == 'JR':
+        if fila_pipeline[1][0].nome == 'BEQ' or fila_pipeline[1][0].nome == 'BNE' or fila_pipeline[1][0].nome == 'J' or fila_pipeline[1][0].nome == 'JAL':
             pc_atual = fila_pipeline[1][-1]
-            # fila_pipeline.pop()
+        elif fila_pipeline[1][0].nome == 'JR':
+            pc_atual = fila_pipeline[1][-1] - 1
     print(f'Atualmente no estágio 1: {fila_pipeline[1]}')
 
     # Pipelining ESTÁGIO 2 - EX: Calcula o endereço ou executa a operação expressa pela instrução que está na etapa 2 (se houver)
