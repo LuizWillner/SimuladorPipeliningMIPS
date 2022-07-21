@@ -37,7 +37,7 @@ def processar_instrucao_R(linha_de_instrucao, banco_regs):
         return [rs]
 
 
-def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq):
+def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual):
 
     if linha_de_instrucao[0] == 'ADDI':
         nome_rt = linha_de_instrucao[1].lower()
@@ -75,18 +75,39 @@ def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq):
 
         return [rt, rs, imediato]
 
-    elif linha_de_instrucao[0] == 'BEQ' or linha_de_instrucao[0] == 'BNE':
-        # TODO: Verificar se tá certo
+    elif linha_de_instrucao[0] == 'BEQ':
         nome_rs = linha_de_instrucao[1].lower()
         rs = banco_regs[nome_rs]
 
-        nome_rt = linha_de_instrucao[1].lower()
+        nome_rt = linha_de_instrucao[2].lower()
         rt = banco_regs[nome_rt]
 
         label = linha_de_instrucao[3]
-        label_linha = flags_no_arq[label]
 
-        return [rs, rt, label_linha]
+        if rs.valor == rt.valor:
+            # Desvia se igual
+            label_linha = flags_no_arq[label] - 1
+            return [rt, rs, label_linha]
+        else:
+            # Não desvia
+            return [rt, rs, pc_atual]
+
+    elif linha_de_instrucao[0] == 'BNE':
+        nome_rs = linha_de_instrucao[1].lower()
+        rs = banco_regs[nome_rs]
+
+        nome_rt = linha_de_instrucao[2].lower()
+        rt = banco_regs[nome_rt]
+
+        label = linha_de_instrucao[3]
+
+        if rs.valor != rt.valor:
+            # Desvia se diferente
+            label_linha = flags_no_arq[label] - 1
+            return [rt, rs, label_linha]
+        else:
+            # Não desvia
+            return [rt, rs, pc_atual]
 
 
 def processar_instrucao_J(linha_de_instrucao, flags_no_arq):
@@ -98,7 +119,7 @@ def processar_instrucao_J(linha_de_instrucao, flags_no_arq):
         return [label_linha]
 
 
-def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_regs, flags_no_arq):
+def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_regs, flags_no_arq, pc_atual):
 
     nome_instrucao = linha_de_instrucao[0]
     instrucao = conj_de_instrucoes[nome_instrucao]
@@ -109,7 +130,7 @@ def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_re
         linha_de_instrucao_processada.insert(0, instrucao)
 
     elif instrucao.tipo == 'I':
-        linha_de_instrucao_processada = processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq)
+        linha_de_instrucao_processada = processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual)
         linha_de_instrucao_processada.insert(0, instrucao)
 
     else:  # instrucao.tipo == 'J'

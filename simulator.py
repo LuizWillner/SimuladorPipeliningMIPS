@@ -9,9 +9,9 @@ from PipeliningEstagios.wb_escrever_resultado_no_reg import *
 
 # ======================== FUNCTIONS =============================
 
-def avancar_pipelining(fila_pipeline, linha_de_instrucao_para_inserir, conj_de_instrucoes, banco_regs, memoria_dados, flags_no_arq,
-                       resultado):
-
+def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir, conj_de_instrucoes, banco_regs,
+                       memoria_dados,
+                       flags_no_arq):
     #  Pipelining ESTÁGIO 0 - IF: "Buscar" próxima instrução na fila de pipeline e adicionar no início da fila;
     fila_pipeline.insert(0, linha_de_instrucao_para_inserir)
     fila_pipeline.pop()
@@ -25,9 +25,12 @@ def avancar_pipelining(fila_pipeline, linha_de_instrucao_para_inserir, conj_de_i
 
     # Pipelining ESTÁGIO 1 - ID: Decodificar (se houver) a instrução que está no estágio 1 do pipe, fazendo
     # a leitura dos registradores.
-    # Instruções J, JR, JAL, BEQ e BNE fazem o desvio no estágio 1 (ID).
+    # Instruções J, JR, JAL, BEQ e BNE fazem o desvio nesse estágio (ID).
     if fila_pipeline[1]:
-        fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs, flags_no_arq)
+        fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs, flags_no_arq, pc_atual)
+        if fila_pipeline[1][0].nome == 'BEQ' or fila_pipeline[1][0].nome == 'BNE':
+            pc_atual = fila_pipeline[1][-1]
+            # fila_pipeline.pop()
     print(f'Atualmente no estágio 1: {fila_pipeline[1]}')
 
     # Pipelining ESTÁGIO 2 - EX: Calcula o endereço ou executa a operação expressa pela instrução que está na etapa 2 (se houver)
@@ -45,7 +48,8 @@ def avancar_pipelining(fila_pipeline, linha_de_instrucao_para_inserir, conj_de_i
         print(p)
     print('##########################\n')
 
-    return resultado
+    pc_atual += 1
+    return pc_atual
 
 
 def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, flags_no_arq):
@@ -73,8 +77,10 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
 
     # Ler script linha por linha e adicionar pouco a pouco as linhas de instrução na fila de pipeline
     ciclo = 1
-    resultado = 0
-    for linha in script_em_lista:
+    pc_atual = 0
+    while pc_atual < len(script_em_lista):
+        linha = script_em_lista[pc_atual]
+
         # Descobrir em qual indexação da lista está o comando
         if ':' in linha[0]:
             linha_sem_flag = linha[1:]
@@ -86,30 +92,29 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
             linha_sem_flag = None
 
         print(f'\n================================= CICLO {ciclo} =================================\n')
-        resultado = avancar_pipelining(fila_pipeline=pipeline,
-                                       linha_de_instrucao_para_inserir=linha_sem_flag,
-                                       conj_de_instrucoes=conj_de_instrucoes,
-                                       banco_regs=banco_regs,
-                                       memoria_dados=memoria_dados,
-                                       flags_no_arq=flags_no_arq,
-                                       resultado=resultado)
+        pc_atual = avancar_pipelining(fila_pipeline=pipeline,
+                                      pc_atual=pc_atual,
+                                      linha_de_instrucao_para_inserir=linha_sem_flag,
+                                      conj_de_instrucoes=conj_de_instrucoes,
+                                      banco_regs=banco_regs,
+                                      memoria_dados=memoria_dados,
+                                      flags_no_arq=flags_no_arq)
         memoria_dados.print_memory()
         print()
         ciclo += 1
 
-    # Após colocar todas as instruções do script em fila, terminar de executar o pipeline até ele ficar vazio
+    '''# Após colocar todas as instruções do script em fila, terminar de executar o pipeline até ele ficar vazio
     while pipeline != [None, None, None, None, None]:
         print(f'\n================================= CICLO {ciclo} =================================\n')
-        resultado = avancar_pipelining(fila_pipeline=pipeline,
-                                       linha_de_instrucao_para_inserir=None,
-                                       conj_de_instrucoes=conj_de_instrucoes,
-                                       banco_regs=banco_regs,
-                                       memoria_dados=memoria_dados,
-                                       flags_no_arq=flags_no_arq,
-                                       resultado=resultado)
+        avancar_pipelining(fila_pipeline=pipeline,
+                           linha_de_instrucao_para_inserir=None,
+                           conj_de_instrucoes=conj_de_instrucoes,
+                           banco_regs=banco_regs,
+                           memoria_dados=memoria_dados,
+                           flags_no_arq=flags_no_arq)
         memoria_dados.print_memory()
         print()
-        ciclo += 1
+        ciclo += 1'''
 
     for nome_reg in banco_regs:
         reg = banco_regs[nome_reg]

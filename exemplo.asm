@@ -1,3 +1,22 @@
-add $v0, $at, $a0
-addi $t2, $t0, 6
-add $s2, $s1, $s0
+ADDI $T0, $ZERO, 1
+ADDI $T1, $ZERO, 1
+NOP
+NOP
+NOP
+NOP
+BEQ $T0, $T1, IF
+NOP
+NOP
+NOP
+NOP
+ADDI $T2, $T2, 2
+NOP
+NOP
+NOP
+NOP
+IF: ADDI $T2, $T2, 1
+NOP
+NOP
+NOP
+NOP
+NOP

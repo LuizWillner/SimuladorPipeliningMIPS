@@ -25,7 +25,7 @@ def gerar_lista_instruction_fields(command_line):
 def ler_instruction_fields(arq_assembly):
     linha = arq_assembly.readline()
     instruction_fields = []
-    num_linha = 1
+    num_linha = 0
 
     while linha:
         linha_lista = gerar_lista_instruction_fields(linha)
