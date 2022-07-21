@@ -34,7 +34,9 @@ def processar_instrucao_R(linha_de_instrucao, banco_regs):
         nome_rs = linha_de_instrucao[1].lower()
         rs = banco_regs[nome_rs]
 
-        return [rs]
+        pc_antigo = rs.valor - 1
+
+        return [rs, pc_antigo]
 
 
 def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual):
