@@ -4,7 +4,7 @@ Valor armazenado: 0
 
 Registrador 1
 Nome: $at
-Valor armazenado: 0
+Valor armazenado: 19
 
 Registrador 2
 Nome: $v0
