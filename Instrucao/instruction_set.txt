@@ -43,6 +43,11 @@ Opcode: 35
 Tipo: I
 Funct: None
 
+Instrucao NOP
+Opcode: 0
+Tipo: R
+Funct: 0
+
 Instrucao OR
 Opcode: 0
 Tipo: R

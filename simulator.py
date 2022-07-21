@@ -51,16 +51,21 @@ def avancar_pipelining(fila_pipeline, linha_de_instrucao_para_inserir, conj_de_i
 def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, flags_no_arq):
     pipeline = [None, None, None, None, None]
 
-    print('############# SCRIPT #############')
-    for linha in script_em_lista:
-        print(linha)
-    print()
-
     print('######## BANCO DE REGISTRADORES ########')
     for reg in banco_regs:
         banco_regs[reg].print_register()
     print()
     print(banco_regs)
+
+    print('######## CONJ DE INSTRUCOES ########')
+    for inst in conj_de_instrucoes:
+        conj_de_instrucoes[inst].print_instruction(one_line=True)
+    print()
+
+    print('############# SCRIPT #############')
+    for linha in script_em_lista:
+        print(linha)
+    print()
 
     print('########## FLAGS NO ARQ ##########')
     print(flags_no_arq)
@@ -71,12 +76,18 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
     resultado = 0
     for linha in script_em_lista:
         # Descobrir em qual indexação da lista está o comando
-        i = 0
-        if ':' in linha[i]:
-            i += 1
+        if ':' in linha[0]:
+            linha_sem_flag = linha[1:]
+        else:
+            linha_sem_flag = linha.copy()
+
+        # Se o comando for NOP, atribuímos None a linha_sem_flag para simular a bolha
+        if linha_sem_flag[0] == 'NOP':
+            linha_sem_flag = None
+
         print(f'\n================================= CICLO {ciclo} =================================\n')
         resultado = avancar_pipelining(fila_pipeline=pipeline,
-                                       linha_de_instrucao_para_inserir=linha[i:],
+                                       linha_de_instrucao_para_inserir=linha_sem_flag,
                                        conj_de_instrucoes=conj_de_instrucoes,
                                        banco_regs=banco_regs,
                                        memoria_dados=memoria_dados,

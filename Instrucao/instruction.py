@@ -21,13 +21,18 @@ class Instruction:
         self.tipo = tipo
         self.funct = funct
 
-    def print_instruction(self):
-        print(f'Instrução {self.nome}:')
-        print(f'Opcode: {self.opcode}')
-        print(f'Tipo: {self.tipo}')
-        print(f'Funct: {self.funct}')
-        print()
-
+    def print_instruction(self, one_line=False):
+        if not one_line:
+            print(f'Instrução {self.nome}:')
+            print(f'Opcode: {self.opcode}')
+            print(f'Tipo: {self.tipo}')
+            print(f'Funct: {self.funct}')
+            print()
+        else:
+            print(f'Instrução {self.nome}:', end='\t')
+            print(f'Opcode: {self.opcode}', end='\t')
+            print(f'Tipo: {self.tipo}', end='  ')
+            print(f'Funct: {self.funct}')
 
 # ======================== FUNCTIONS ===============================
 

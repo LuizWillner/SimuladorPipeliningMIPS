@@ -8,8 +8,6 @@ import simulator
 
 # ==================== CONSTANTS & GLOBALS =======================
 
-flags_no_arq = dict({})
-
 
 # ======================== FUNCTIONS =============================
 
@@ -59,6 +57,7 @@ arq_instset = open('Instrucao/instruction_set.txt', 'r')
 # Cada lista dessa matriz é uma linha do código fonte.
 # Cada item da lista é um campo de instrução (ex: ADD $V0, $ZERO, $AT --> ['ADD', '$V0', '$ZERO', '$AT']
 # Além disso, gerar também dicionário que associa todas as flags do código com suas respectivas posições no arquivo
+flags_no_arq = dict({})
 instruction_fields = ler_instruction_fields(arq_assembly)
 
 # Dicionário que representa o banco de registradores
