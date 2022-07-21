@@ -49,10 +49,6 @@ def executar_instrucao_I(linha_de_instrucao_processada, banco_regs):
         return res
 
 
-def executar_instrucao_J():
-    return
-
-
 def pipe2_executar_instrucao(linha_de_instrucao_processada, banco_regs, flags_no_arq):
     instrucao = linha_de_instrucao_processada[0]
 

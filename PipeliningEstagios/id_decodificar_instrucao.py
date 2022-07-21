@@ -112,11 +112,19 @@ def processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual
 
 def processar_instrucao_J(linha_de_instrucao, flags_no_arq):
     # TODO: Verificar se tá certo
-    if linha_de_instrucao[0] == 'J' or linha_de_instrucao[0] == 'JAL':
+    if linha_de_instrucao[0] == 'J':
         label = linha_de_instrucao[1]
-        label_linha = flags_no_arq[label]
+        label_linha = flags_no_arq[label] - 1
 
         return [label_linha]
+
+    elif linha_de_instrucao[0] == 'JAL':
+        # TODO: implementar JAL
+        pass
+
+    elif linha_de_instrucao[0] == 'JR':
+        # TODO: implementar JR
+        pass
 
 
 def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_regs, flags_no_arq, pc_atual):

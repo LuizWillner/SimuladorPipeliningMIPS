@@ -28,7 +28,7 @@ def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir,
     # Instruções J, JR, JAL, BEQ e BNE fazem o desvio nesse estágio (ID).
     if fila_pipeline[1]:
         fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs, flags_no_arq, pc_atual)
-        if fila_pipeline[1][0].nome == 'BEQ' or fila_pipeline[1][0].nome == 'BNE':
+        if fila_pipeline[1][0].nome == 'BEQ' or fila_pipeline[1][0].nome == 'BNE' or fila_pipeline[1][0].nome == 'J':
             pc_atual = fila_pipeline[1][-1]
             # fila_pipeline.pop()
     print(f'Atualmente no estágio 1: {fila_pipeline[1]}')
