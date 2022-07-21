@@ -3,13 +3,13 @@ def pipe3_acessar_memoria(linha_de_instrucao_processada, memoria_dados):
 
     if instrucao.nome == 'LW':
         index_mem = linha_de_instrucao_processada[-1]
-        valor_mem = memoria_dados[index_mem]
+        valor_mem = memoria_dados.values[index_mem]
         linha_de_instrucao_processada[-1] = valor_mem
 
     elif instrucao.nome == 'SW':
         rt = linha_de_instrucao_processada[1]
         valor_mem = rt.valor
         index_mem = linha_de_instrucao_processada[-1]
-        memoria_dados[index_mem] = valor_mem
+        memoria_dados.values[index_mem] = valor_mem
 
     return linha_de_instrucao_processada

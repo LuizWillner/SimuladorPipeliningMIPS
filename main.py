@@ -1,7 +1,8 @@
 # =========================== IMPORTS ============================
 
-from ArquivosDosRegistradores.register import *
-from ArquivosDasInstrucoes.instruction import *
+from RegistradoresEMemoria.register import *
+from RegistradoresEMemoria.memory import *
+from Instrucao.instruction import *
 import simulator
 
 
@@ -51,8 +52,8 @@ def ler_instruction_fields(arq_assembly):
 
 # Abrir os arquivos
 arq_assembly = open('exemplo.asm', 'r')
-arq_regset = open('ArquivosDosRegistradores/register_set.txt', 'r')
-arq_instset = open('ArquivosDasInstrucoes/instruction_set.txt', 'r')
+arq_regset = open('RegistradoresEMemoria/register_set.txt', 'r')
+arq_instset = open('Instrucao/instruction_set.txt', 'r')
 
 # Gerar matriz em memória que representa o script assembly.
 # Cada lista dessa matriz é uma linha do código fonte.
@@ -67,7 +68,7 @@ for i in range(32):  # 32 é a quantidade de registradores do processador
     banco_regs[reg.nome] = reg
 
 # Lista que representa a memória de dados
-memoria_dados = [0] * 1000
+memoria_dados = Memory(1000)
 
 # Dicionário que representa o conjunto de instruções, montado a partir da leitura do arquivo "instruction_set.txt"
 instrucoes_dict = dict({})
