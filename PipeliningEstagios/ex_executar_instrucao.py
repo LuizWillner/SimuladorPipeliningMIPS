@@ -18,7 +18,7 @@ def executar_instrucao_R(linha_de_instrucao_processada, banco_regs):
 def executar_instrucao_I(linha_de_instrucao_processada, banco_regs):
     instrucao = linha_de_instrucao_processada[0]
 
-    if instrucao.nome == 'ADDI':
+    if instrucao.nome == 'ADDI' or instrucao.nome == 'LW' or instrucao.nome == 'SW':
         rs = linha_de_instrucao_processada[2]
         imediato = linha_de_instrucao_processada[3]
         res = rs.valor + imediato

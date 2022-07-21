@@ -32,7 +32,7 @@ Valor armazenado: 0
 
 Registrador 8
 Nome: $t0
-Valor armazenado: 0
+Valor armazenado: 14
 
 Registrador 9
 Nome: $t1

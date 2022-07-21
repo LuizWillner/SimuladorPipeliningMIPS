@@ -1,8 +1,8 @@
 # =========================== IMPORTS ============================
 from PipeliningEstagios.id_decodificar_instrucao import *
 from PipeliningEstagios.ex_executar_instrucao import *
-from PipeliningEstagios.wb_escrever_resultado_no_reg import *
 from PipeliningEstagios.mem_acessar_memoria import *
+from PipeliningEstagios.wb_escrever_resultado_no_reg import *
 
 
 # ==================== CONSTANTS & GLOBALS =======================
