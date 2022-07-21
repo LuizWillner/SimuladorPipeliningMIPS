@@ -11,6 +11,7 @@ from PipeliningEstagios.mem_acessar_memoria import *
 
 def avancar_pipelining(fila_pipeline, linha_de_instrucao_para_inserir, conj_de_instrucoes, banco_regs, memoria_dados, flags_no_arq,
                        resultado):
+
     #  Pipelining ESTÁGIO 0 - IF: "Buscar" próxima instrução na fila de pipeline e adicionar no início da fila;
     fila_pipeline.insert(0, linha_de_instrucao_para_inserir)
     fila_pipeline.pop()

@@ -16,7 +16,7 @@ Valor armazenado: 0
 
 Registrador 4
 Nome: $a0
-Valor armazenado: 0
+Valor armazenado: 2112
 
 Registrador 5
 Nome: $a1
