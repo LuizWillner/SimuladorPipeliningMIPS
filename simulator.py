@@ -3,6 +3,7 @@ from PipeliningEstagios.id_decodificar_instrucao import *
 from PipeliningEstagios.ex_executar_instrucao import *
 from PipeliningEstagios.mem_acessar_memoria import *
 from PipeliningEstagios.wb_escrever_resultado_no_reg import *
+from Saida.saida import *
 
 
 # ==================== CONSTANTS & GLOBALS =======================
@@ -10,8 +11,8 @@ from PipeliningEstagios.wb_escrever_resultado_no_reg import *
 # ======================== FUNCTIONS =============================
 
 def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir, conj_de_instrucoes, banco_regs,
-                       memoria_dados,
-                       flags_no_arq):
+                       memoria_dados, flags_no_arq):
+
     #  Pipelining ESTÁGIO 0 - IF: "Buscar" próxima instrução na fila de pipeline e adicionar no início da fila;
     fila_pipeline.insert(0, linha_de_instrucao_para_inserir)
     fila_pipeline.pop()
@@ -53,7 +54,7 @@ def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir,
     return pc_atual
 
 
-def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, flags_no_arq):
+def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, flags_no_arq, saida):
     pipeline = [None, None, None, None, None]
 
     print('######## BANCO DE REGISTRADORES ########')
@@ -104,18 +105,19 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
         print()
         ciclo += 1
 
-    '''# Após colocar todas as instruções do script em fila, terminar de executar o pipeline até ele ficar vazio
+    # Após colocar todas as instruções do script em fila, terminar de executar o pipeline até ele ficar vazio
     while pipeline != [None, None, None, None, None]:
         print(f'\n================================= CICLO {ciclo} =================================\n')
-        avancar_pipelining(fila_pipeline=pipeline,
-                           linha_de_instrucao_para_inserir=None,
-                           conj_de_instrucoes=conj_de_instrucoes,
-                           banco_regs=banco_regs,
-                           memoria_dados=memoria_dados,
-                           flags_no_arq=flags_no_arq)
+        pc_atual = avancar_pipelining(fila_pipeline=pipeline,
+                                      pc_atual=pc_atual,
+                                      linha_de_instrucao_para_inserir=None,
+                                      conj_de_instrucoes=conj_de_instrucoes,
+                                      banco_regs=banco_regs,
+                                      memoria_dados=memoria_dados,
+                                      flags_no_arq=flags_no_arq)
         memoria_dados.print_memory()
         print()
-        ciclo += 1'''
+        ciclo += 1
 
     for nome_reg in banco_regs:
         reg = banco_regs[nome_reg]

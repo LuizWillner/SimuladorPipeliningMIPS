@@ -3,6 +3,7 @@
 from RegistradoresEMemoria.register import *
 from RegistradoresEMemoria.memory import *
 from Instrucao.instruction import *
+from Saida.saida import *
 import simulator
 
 
@@ -52,6 +53,7 @@ def ler_instruction_fields(arq_assembly):
 arq_assembly = open('exemplo.asm', 'r')
 arq_regset = open('RegistradoresEMemoria/register_set.txt', 'r')
 arq_instset = open('Instrucao/instruction_set.txt', 'r')
+arq_saida = open('saida.html', 'w')
 
 # Gerar matriz em memória que representa o script assembly.
 # Cada lista dessa matriz é uma linha do código fonte.
@@ -75,13 +77,31 @@ for i in range(14):  # 14 é a quantidade de instruções do conjunto de instru�
     inst = ler_instrucao(arq_instset)
     instrucoes_dict[inst.nome] = inst
 
-# Fechar os arquivos
-arq_assembly.close()
-arq_regset.close()
-arq_instset.close()
+# Iniciar saída formatada em HTML
+init_html(arq_saida)
 
+# Escrever subheader do HTML
+arq_saida.write('<section id="subheader">')
+print_banco_regs_html(arq_saida, banco_regs)
+print_conj_de_instrucoes_html(arq_saida, instrucoes_dict)
+print_text_file_html(arq_saida, arq_assembly)
+arq_saida.write('</section>')
+
+
+# Executrar simulador de pipelining
 simulator.executar(script_em_lista=instruction_fields,
                    banco_regs=banco_regs,
                    memoria_dados=memoria_dados,
                    conj_de_instrucoes=instrucoes_dict,
-                   flags_no_arq=flags_no_arq)
+                   flags_no_arq=flags_no_arq,
+                   saida=arq_saida)
+
+
+# Concluir HTML, criando footer e fechando body
+conclude_html(arq_saida)
+
+# Fechar os arquivos
+arq_assembly.close()
+arq_regset.close()
+arq_instset.close()
+arq_saida.close()
