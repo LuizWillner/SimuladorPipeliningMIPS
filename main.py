@@ -94,7 +94,7 @@ simulator.executar(script_em_lista=instruction_fields,
                    memoria_dados=memoria_dados,
                    conj_de_instrucoes=instrucoes_dict,
                    flags_no_arq=flags_no_arq,
-                   saida=arq_saida)
+                   arq_saida=arq_saida)
 
 
 # Concluir HTML, criando footer e fechando body

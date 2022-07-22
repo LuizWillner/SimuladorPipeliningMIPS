@@ -12,7 +12,6 @@ from Saida.saida import *
 
 def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir, conj_de_instrucoes, banco_regs,
                        memoria_dados, flags_no_arq):
-
     #  Pipelining ESTÁGIO 0 - IF: "Buscar" próxima instrução na fila de pipeline e adicionar no início da fila;
     fila_pipeline.insert(0, linha_de_instrucao_para_inserir)
     fila_pipeline.pop()
@@ -28,8 +27,10 @@ def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir,
     # a leitura dos registradores.
     # Instruções J, JR, JAL, BEQ e BNE fazem o desvio nesse estágio (ID).
     if fila_pipeline[1]:
-        fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs, flags_no_arq, pc_atual)
-        if fila_pipeline[1][0].nome == 'BEQ' or fila_pipeline[1][0].nome == 'BNE' or fila_pipeline[1][0].nome == 'J' or fila_pipeline[1][0].nome == 'JAL':
+        fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs, flags_no_arq,
+                                                       pc_atual)
+        if fila_pipeline[1][0].nome == 'BEQ' or fila_pipeline[1][0].nome == 'BNE' or fila_pipeline[1][0].nome == 'J' or \
+                fila_pipeline[1][0].nome == 'JAL':
             pc_atual = fila_pipeline[1][-1]
         elif fila_pipeline[1][0].nome == 'JR':
             pc_atual = fila_pipeline[1][-1] - 1
@@ -45,16 +46,11 @@ def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir,
         fila_pipeline[3] = pipe3_acessar_memoria(fila_pipeline[3], memoria_dados)
     print(f'Atualmente no estágio 3: {fila_pipeline[3]}')
 
-    print('\n####### PIPELINING #######')
-    for p in fila_pipeline:
-        print(p)
-    print('##########################\n')
-
     pc_atual += 1
     return pc_atual
 
 
-def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, flags_no_arq, saida):
+def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, flags_no_arq, arq_saida):
     pipeline = [None, None, None, None, None]
 
     print('######## BANCO DE REGISTRADORES ########')
@@ -76,6 +72,8 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
     print('########## FLAGS NO ARQ ##########')
     print(flags_no_arq)
     print()
+
+    arq_saida.write('<section id="todos_os_ciclos">')
 
     # Ler script linha por linha e adicionar pouco a pouco as linhas de instrução na fila de pipeline
     ciclo = 1
@@ -101,8 +99,17 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
                                       banco_regs=banco_regs,
                                       memoria_dados=memoria_dados,
                                       flags_no_arq=flags_no_arq)
+
+        print('\n####### PIPELINING #######')
+        for p in pipeline:
+            print(p)
+        print('##########################\n')
+
         memoria_dados.print_memory()
         print()
+
+        print_ciclo_html(arq_saida, ciclo, pipeline, banco_regs, memoria_dados)
+
         ciclo += 1
 
     # Após colocar todas as instruções do script em fila, terminar de executar o pipeline até ele ficar vazio
@@ -115,12 +122,22 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
                                       banco_regs=banco_regs,
                                       memoria_dados=memoria_dados,
                                       flags_no_arq=flags_no_arq)
+        print('\n####### PIPELINING #######')
+        for p in pipeline:
+            print(p)
+        print('##########################\n')
+
         memoria_dados.print_memory()
         print()
+
+        print_ciclo_html(arq_saida, ciclo, pipeline, banco_regs, memoria_dados)
+
         ciclo += 1
 
     for nome_reg in banco_regs:
         reg = banco_regs[nome_reg]
         reg.print_register()
+
+    arq_saida.write('</section>\n')
 
     return
