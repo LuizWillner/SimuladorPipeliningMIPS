@@ -134,13 +134,16 @@ def pipe1_decodificar_instrucao(linha_de_instrucao, conj_de_instrucoes, banco_re
     if instrucao.tipo == 'R':
         linha_de_instrucao_processada = processar_instrucao_R(linha_de_instrucao, banco_regs)
         linha_de_instrucao_processada.insert(0, instrucao)
+        linha_de_instrucao_processada.insert(0, linha_de_instrucao)
 
     elif instrucao.tipo == 'I':
         linha_de_instrucao_processada = processar_instrucao_I(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual)
         linha_de_instrucao_processada.insert(0, instrucao)
+        linha_de_instrucao_processada.insert(0, linha_de_instrucao)
 
     else:  # instrucao.tipo == 'J'
         linha_de_instrucao_processada = processar_instrucao_J(linha_de_instrucao, banco_regs, flags_no_arq, pc_atual)
         linha_de_instrucao_processada.insert(0, instrucao)
+        linha_de_instrucao_processada.insert(0, linha_de_instrucao)
 
     return linha_de_instrucao_processada

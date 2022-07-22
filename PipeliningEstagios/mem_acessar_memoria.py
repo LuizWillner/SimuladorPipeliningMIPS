@@ -1,5 +1,5 @@
 def pipe3_acessar_memoria(linha_de_instrucao_processada, memoria_dados):
-    instrucao = linha_de_instrucao_processada[0]
+    instrucao = linha_de_instrucao_processada[1]
 
     if instrucao.nome == 'LW':
         index_mem = linha_de_instrucao_processada[-1]
@@ -7,7 +7,7 @@ def pipe3_acessar_memoria(linha_de_instrucao_processada, memoria_dados):
         linha_de_instrucao_processada[-1] = valor_mem
 
     elif instrucao.nome == 'SW':
-        rt = linha_de_instrucao_processada[1]
+        rt = linha_de_instrucao_processada[2]
         valor_mem = rt
         index_mem = linha_de_instrucao_processada[-1]
         memoria_dados.values[index_mem] = valor_mem
