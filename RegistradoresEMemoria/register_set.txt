@@ -4,7 +4,7 @@ Valor armazenado: 0
 
 Registrador 1
 Nome: $at
-Valor armazenado: 19
+Valor armazenado: 0
 
 Registrador 2
 Nome: $v0
@@ -16,7 +16,7 @@ Valor armazenado: 0
 
 Registrador 4
 Nome: $a0
-Valor armazenado: 2112
+Valor armazenado: 0
 
 Registrador 5
 Nome: $a1
@@ -68,7 +68,7 @@ Valor armazenado: 0
 
 Registrador 17
 Nome: $s1
-Valor armazenado: 1
+Valor armazenado: 0
 
 Registrador 18
 Nome: $s2

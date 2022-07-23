@@ -1,12 +1,18 @@
-ADDI $T0, $ZERO, 1
-ADDI $T1, $ZERO, 2
-NOP
-NOP
-NOP
-NOP
-BEQ $T0, $T1, IF
-ADDI $T2, $T2, 2
-NOP
-NOP
-NOP
-IF: ADDI $T2, $T2, 1
+addi $s0, $zero, 0
+addi $s6, $zero, 6
+addi $s1, $zero, 1
+nop
+nop
+LOOP: beq $s0, $s6, EXIT
+addi $s7, $s7, 2
+nop
+nop
+add $s1, $s1, $s1
+addi $s0, $s0, 1
+nop
+nop
+j LOOP
+nop
+EXIT: sub $s6, $s6, $s1
+nop
+addi $s6, $s6, 1

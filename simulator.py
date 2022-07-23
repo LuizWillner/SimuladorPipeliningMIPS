@@ -30,10 +30,8 @@ def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir,
         fila_pipeline[1] = pipe1_decodificar_instrucao(fila_pipeline[1], conj_de_instrucoes, banco_regs, flags_no_arq,
                                                        pc_atual)
         if fila_pipeline[1][1].nome == 'BEQ' or fila_pipeline[1][1].nome == 'BNE' or fila_pipeline[1][1].nome == 'J' or \
-                fila_pipeline[1][1].nome == 'JAL':
+                fila_pipeline[1][1].nome == 'JAL' or fila_pipeline[1][1].nome == 'JR':
             pc_atual = fila_pipeline[1][-1]
-        elif fila_pipeline[1][1].nome == 'JR':
-            pc_atual = fila_pipeline[1][-1] - 1
     print(f'Atualmente no estágio 1: {fila_pipeline[1]}')
 
     # Pipelining ESTÁGIO 2 - EX: Calcula o endereço ou executa a operação expressa pela instrução que está na etapa 2 (se houver)
@@ -62,10 +60,10 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
         linha = script_em_lista[pc_atual]
 
         # Descobrir em qual indexação da lista está o comando
-        if ':' in linha[0]:
-            linha_sem_flag = linha[1:]
-        else:
-            linha_sem_flag = linha.copy()
+        i = 0
+        while ':' in linha[i]:
+            i += 1
+        linha_sem_flag = linha[i:]
 
         # Se o comando for NOP, atribuímos None a linha_sem_flag para simular a bolha
         if linha_sem_flag[0] == 'NOP':

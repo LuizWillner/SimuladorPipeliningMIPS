@@ -34,12 +34,14 @@ def ler_instruction_fields(arq_assembly):
         if linha_lista:  # se a lista tiver alguma coisa dentro, ou seja, não for vazia...
             instruction_fields.append(linha_lista)  # ... adicionar na matriz geral de linhas
 
-            if ':' in linha_lista[0]:  # se tiver ':', é uma flag, então...
+            i = 0
+            while ':' in linha_lista[i]:  # se tiver ':', é uma flag, então...
                 # Adicionar flag no dicionario de flags junto com sua posição no arquivo
-                flag_nome = linha_lista[0].replace(':', '')
+                flag_nome = linha_lista[i].replace(':', '')
                 # flag_pos = arq_assembly.tell()
                 flag_pos = num_linha
                 flags_no_arq[flag_nome] = flag_pos
+                i += 1
 
         linha = arq_assembly.readline()  # passar pra próxima linha
         num_linha += 1
@@ -73,7 +75,7 @@ memoria_dados = Memory(1000)
 
 # Dicionário que representa o conjunto de instruções, montado a partir da leitura do arquivo "instruction_set.txt"
 instrucoes_dict = dict({})
-for i in range(14):  # 14 é a quantidade de instruções do conjunto de instruções fornecidos no exercício
+for i in range(15):  # 14 é a quantidade de instruções do conjunto de instruções fornecidos no exercício
     inst = ler_instrucao(arq_instset)
     instrucoes_dict[inst.nome] = inst
 
