@@ -3,7 +3,6 @@ from PipeliningEstagios.id_decodificar_instrucao import *
 from PipeliningEstagios.ex_executar_instrucao import *
 from PipeliningEstagios.mem_acessar_memoria import *
 from PipeliningEstagios.wb_escrever_resultado_no_reg import *
-from Instrucao.linha_de_comando import *
 from Saida.saida import *
 
 
@@ -54,27 +53,7 @@ def avancar_pipelining(fila_pipeline, pc_atual, linha_de_instrucao_para_inserir,
 def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, flags_no_arq, arq_saida):
     pipeline = [None, None, None, None, None]
 
-    print('######## BANCO DE REGISTRADORES ########')
-    for reg in banco_regs:
-        banco_regs[reg].print_register()
-    print()
-    print(banco_regs)
-
-    print('######## CONJ DE INSTRUCOES ########')
-    for inst in conj_de_instrucoes:
-        conj_de_instrucoes[inst].print_instruction(one_line=True)
-    print()
-
-    print('############# SCRIPT #############')
-    for linha in script_em_lista:
-        print(linha)
-    print()
-
-    print('########## FLAGS NO ARQ ##########')
-    print(flags_no_arq)
-    print()
-
-    # TODO: arq_saida.write('<section id="todos_os_ciclos">')
+    arq_saida.write('<section id="todos_os_ciclos">')
 
     # Ler script linha por linha e adicionar pouco a pouco as linhas de instrução na fila de pipeline
     ciclo = 1
@@ -109,7 +88,7 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
         memoria_dados.print_memory()
         print()
 
-        # TODO: print_ciclo_html(arq_saida, ciclo, pipeline, banco_regs, memoria_dados)
+        print_ciclo_html(arq_saida, ciclo, pipeline, banco_regs, memoria_dados)
 
         ciclo += 1
 
@@ -131,7 +110,7 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
         memoria_dados.print_memory()
         print()
 
-        # TODO: print_ciclo_html(arq_saida, ciclo, pipeline, banco_regs, memoria_dados)
+        print_ciclo_html(arq_saida, ciclo, pipeline, banco_regs, memoria_dados)
 
         ciclo += 1
 
@@ -139,6 +118,6 @@ def executar(script_em_lista, banco_regs, memoria_dados, conj_de_instrucoes, fla
         reg = banco_regs[nome_reg]
         reg.print_register()
 
-    # TODO: arq_saida.write('</section>\n')
+    arq_saida.write('</section>\n')
 
     return

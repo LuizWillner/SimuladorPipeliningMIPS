@@ -53,7 +53,7 @@ def ler_instruction_fields(arq_assembly):
 arq_assembly = open('exemplo.asm', 'r')
 arq_regset = open('RegistradoresEMemoria/register_set.txt', 'r')
 arq_instset = open('Instrucao/instruction_set.txt', 'r')
-arq_saida = open('saida.html', 'w')
+arq_saida = open('Saida/saida.html', 'w')
 
 # Gerar matriz em memória que representa o script assembly.
 # Cada lista dessa matriz é uma linha do código fonte.
@@ -81,7 +81,7 @@ for i in range(14):  # 14 é a quantidade de instruções do conjunto de instru�
 init_html(arq_saida)
 
 # Escrever subheader do HTML
-arq_saida.write('<section id="subheader">')
+arq_saida.write('<section class="subheader">')
 print_banco_regs_html(arq_saida, banco_regs)
 print_conj_de_instrucoes_html(arq_saida, instrucoes_dict)
 print_text_file_html(arq_saida, arq_assembly)
