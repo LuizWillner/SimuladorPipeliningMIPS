@@ -1,0 +1,128 @@
+Registrador 0
+Nome: $zero
+Valor armazenado: 0
+
+Registrador 1
+Nome: $at
+Valor armazenado: 0
+
+Registrador 2
+Nome: $v0
+Valor armazenado: 0
+
+Registrador 3
+Nome: $v1
+Valor armazenado: 0
+
+Registrador 4
+Nome: $a0
+Valor armazenado: 0
+
+Registrador 5
+Nome: $a1
+Valor armazenado: 0
+
+Registrador 6
+Nome: $a2
+Valor armazenado: 0
+
+Registrador 7
+Nome: $a3
+Valor armazenado: 0
+
+Registrador 8
+Nome: $t0
+Valor armazenado: 0
+
+Registrador 9
+Nome: $t1
+Valor armazenado: 0
+
+Registrador 10
+Nome: $t2
+Valor armazenado: 0
+
+Registrador 11
+Nome: $t3
+Valor armazenado: 0
+
+Registrador 12
+Nome: $t4
+Valor armazenado: 0
+
+Registrador 13
+Nome: $t5
+Valor armazenado: 0
+
+Registrador 14
+Nome: $t6
+Valor armazenado: 0
+
+Registrador 15
+Nome: $t7
+Valor armazenado: 0
+
+Registrador 16
+Nome: $s0
+Valor armazenado: 0
+
+Registrador 17
+Nome: $s1
+Valor armazenado: 0
+
+Registrador 18
+Nome: $s2
+Valor armazenado: 0
+
+Registrador 19
+Nome: $s3
+Valor armazenado: 0
+
+Registrador 20
+Nome: $s4
+Valor armazenado: 0
+
+Registrador 21
+Nome: $s5
+Valor armazenado: 0
+
+Registrador 22
+Nome: $s6
+Valor armazenado: 0
+
+Registrador 23
+Nome: $s7
+Valor armazenado: 0
+
+Registrador 24
+Nome: $t8
+Valor armazenado: 0
+
+Registrador 25
+Nome: $t9
+Valor armazenado: 0
+
+Registrador 26
+Nome: $k0
+Valor armazenado: 0
+
+Registrador 27
+Nome: $k1
+Valor armazenado: 0
+
+Registrador 28
+Nome: $gp
+Valor armazenado: 0
+
+Registrador 29
+Nome: $sp
+Valor armazenado: 0
+
+Registrador 30
+Nome: $fp
+Valor armazenado: 0
+
+Registrador 31
+Nome: $ra
+Valor armazenado: 0
+

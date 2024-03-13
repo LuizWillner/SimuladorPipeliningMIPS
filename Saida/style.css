@@ -1,0 +1,52 @@
+header > h1 {
+    text-align: center;
+    background-color: aquamarine;
+    padding: 1em;
+}
+
+.subheader {
+    /*background-color: DodgerBlue;*/
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.script_assembly {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.ciclo {
+    padding: 2em;
+}
+
+.banco_regs {
+    max-width: 50em;
+}
+
+.memoria_dados {
+    max-width: 50em;
+    padding-bottom: 3em;
+    padding-top: 2em;
+}
+
+.pipeline {
+    padding-bottom: 2em;
+}
